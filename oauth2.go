@@ -263,6 +263,7 @@ type tokenRefresher struct {
 // Within this package, it is used by reuseTokenSource which
 // synchronizes calls to this method with its own mutex.
 func (tf *tokenRefresher) Token() (*Token, error) {
+	println("tokenRefresher.Token() called")
 	if tf.refreshToken == "" {
 		return nil, errors.New("oauth2: token expired and refresh token is not set")
 	}
@@ -299,8 +300,10 @@ func (s *reuseTokenSource) Token() (*Token, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if s.t.Valid() {
+		println("token seems valid")
 		return s.t, nil
 	}
+	println("token is not valid, trying to refresh")
 	t, err := s.new.Token()
 	if err != nil {
 		return nil, err
