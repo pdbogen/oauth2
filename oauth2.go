@@ -273,6 +273,8 @@ func (tf *tokenRefresher) Token() (*Token, error) {
 		"refresh_token": {tf.refreshToken},
 	})
 
+	println("old token: ", tf.refreshToken, "; new token: ", tk.RefreshToken)
+
 	if err != nil {
 		return nil, err
 	}
